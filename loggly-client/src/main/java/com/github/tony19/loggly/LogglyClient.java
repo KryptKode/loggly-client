@@ -20,6 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -47,6 +48,7 @@ public class LogglyClient implements ILogglyClient {
 
         Retrofit restAdapter = new Retrofit.Builder()
                 .baseUrl(API_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
