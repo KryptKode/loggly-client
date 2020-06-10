@@ -16,6 +16,7 @@
 package com.github.tony19.loggly;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -118,18 +119,17 @@ public class LogglyClient implements ILogglyClient {
 
         loggly.log(token,
                 tags,
-                message,
-                new retrofit2.Callback<LogglyResponse>() {
-                    @Override
-                    public void onResponse(Call<LogglyResponse> call, Response<LogglyResponse> response) {
-                        callback.success();
-                    }
+                message).enqueue(new retrofit2.Callback<LogglyResponse>() {
+            @Override
+            public void onResponse(Call<LogglyResponse> call, Response<LogglyResponse> response) {
+                callback.success();
+            }
 
-                    @Override
-                    public void onFailure(Call<LogglyResponse> call, Throwable throwable) {
-                        callback.failure(throwable.getMessage());
-                    }
-                });
+            @Override
+            public void onFailure(Call<LogglyResponse> call, Throwable t) {
+                callback.failure(t.getMessage());
+            }
+        });
     }
 
     /**
@@ -176,18 +176,17 @@ public class LogglyClient implements ILogglyClient {
 
         loggly.logBulk(token,
                 tags,
-                parcel,
-                new retrofit2.Callback<LogglyResponse>() {
-                    @Override
-                    public void onResponse(Call<LogglyResponse> call, Response<LogglyResponse> response) {
-                        callback.success();
-                    }
+                parcel).enqueue(new retrofit2.Callback<LogglyResponse>() {
+            @Override
+            public void onResponse(Call<LogglyResponse> call, Response<LogglyResponse> response) {
+                callback.success();
+            }
 
-                    @Override
-                    public void onFailure(Call<LogglyResponse> call, Throwable throwable) {
-                        callback.failure(throwable.getMessage());
-                    }
-                });
+            @Override
+            public void onFailure(Call<LogglyResponse> call, Throwable t) {
+                callback.failure(t.getMessage());
+            }
+        });
     }
 
     /**
