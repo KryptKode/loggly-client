@@ -19,6 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.http.Body;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -38,6 +39,7 @@ interface ILogglyRestService {
      * @return result of the post as a {@link com.github.tony19.loggly.LogglyResponse}
      */
     @POST("inputs/{token}")
+    @Headers("Content-Type: application/json")
     Call<LogglyResponse> log(@Path("token") String token, @Header("X-LOGGLY-TAG") String tags, @Body String message);
 
     /**
@@ -50,5 +52,6 @@ interface ILogglyRestService {
      * @return result of the post as a {@link com.github.tony19.loggly.LogglyResponse}
      */
     @POST("bulk/{token}")
+    @Headers("Content-Type: application/json")
     Call<LogglyResponse> logBulk(@Path("token") String token, @Header("X-LOGGLY-TAG") String tags, @Body String messages);
 }
